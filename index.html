@@ -31,6 +31,11 @@
   --park: #d4e8cd;
   --rail: #98a5ab;
   --light: 1;
+  --glass: rgba(255, 255, 255, 0.78);
+  --glass-line: rgba(20, 34, 40, 0.08);
+  --seg-on: #ffffff;
+  --hover: rgba(20, 34, 40, 0.06);
+  --shadow: 0 1px 2px rgba(16, 28, 34, 0.06), 0 8px 24px -6px rgba(16, 28, 34, 0.18);
   --font-ui: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
   --font-num: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
 }
@@ -61,6 +66,11 @@
     --park: #264633;
     --rail: #6d7e86;
     --light: 0.78;
+    --glass: rgba(26, 36, 42, 0.74);
+    --glass-line: rgba(255, 255, 255, 0.08);
+    --seg-on: rgba(255, 255, 255, 0.12);
+    --hover: rgba(255, 255, 255, 0.07);
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 10px 28px -6px rgba(0, 0, 0, 0.55);
     color-scheme: dark;
   }
 }
@@ -90,6 +100,11 @@
   --park: #264633;
   --rail: #6d7e86;
   --light: 0.78;
+  --glass: rgba(26, 36, 42, 0.74);
+  --glass-line: rgba(255, 255, 255, 0.08);
+  --seg-on: rgba(255, 255, 255, 0.12);
+  --hover: rgba(255, 255, 255, 0.07);
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 10px 28px -6px rgba(0, 0, 0, 0.55);
   color-scheme: dark;
 }
 html, body { height: 100%; }
@@ -107,73 +122,95 @@ body {
   padding-right: max(16px, env(safe-area-inset-right, 0px));
   overflow: hidden;
 }
-header { padding-block: 10px 6px; display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; }
-h1 { margin: 0; font-size: 20px; font-weight: 600; letter-spacing: -0.01em; text-wrap: balance; }
-.sub { margin: 2px 0 0; color: var(--muted); font-size: 12.5px; }
+header { padding-block: 12px 10px; display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; }
+.eyebrow { margin: 0 0 2px; font-size: 11px; font-weight: 500; letter-spacing: 0.08em; color: var(--accent); }
+h1 { margin: 0; font-size: 21px; font-weight: 600; letter-spacing: -0.025em; text-wrap: balance; }
+h1 .tag { display: inline-block; margin-left: 6px; padding: 1px 7px; border-radius: 6px; font-family: var(--font-num); font-size: 12px; font-weight: 500; letter-spacing: 0; vertical-align: 3px; color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, transparent); }
+.sub { margin: 3px 0 0; color: var(--muted); font-size: 12.5px; }
 .sub b { font-family: var(--font-num); font-weight: 500; color: var(--fg); }
-#compass { flex: none; width: 34px; height: 34px; border: 1px solid var(--line); border-radius: 50%; display: grid; place-items: center; font-family: var(--font-num); font-size: 11px; color: var(--muted); background: var(--panel); }
-#compass span { display: block; transition: none; }
-#compass i { font-style: normal; color: var(--accent); font-weight: 500; }
-#stage { position: relative; flex: 1; min-height: 0; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--bg); }
+.glass { background: var(--glass); -webkit-backdrop-filter: blur(16px) saturate(1.5); backdrop-filter: blur(16px) saturate(1.5); box-shadow: var(--shadow), inset 0 0 0 1px var(--glass-line); }
+#stage { position: relative; flex: 1; min-height: 0; border-radius: 18px; overflow: hidden; background: var(--bg); box-shadow: inset 0 0 0 1px var(--glass-line); }
 #gl { display: block; width: 100%; height: 100%; touch-action: none; cursor: grab; }
 #gl:active { cursor: grabbing; }
 #labels { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
-.lbl { position: absolute; left: 0; top: 0; white-space: nowrap; font-size: 11px; font-weight: 500; padding: 1px 6px; border-radius: 4px; background: var(--panel); color: var(--fg); border: 1px solid var(--line); transform: translate(-50%, -100%); }
-.rlbl { position: absolute; left: 0; top: 0; white-space: nowrap; display: none; pointer-events: none; font-size: 10.5px; font-weight: 500; letter-spacing: 0.02em; color: var(--muted); text-shadow: 0 0 2px var(--ground), 0 0 3px var(--ground), 0 0 4px var(--ground); }
+.lbl { position: absolute; left: 0; top: 0; white-space: nowrap; font-size: 11px; font-weight: 500; padding: 2px 8px; border-radius: 7px; background: var(--glass); color: var(--fg); box-shadow: 0 1px 2px rgba(0,0,0,0.08), inset 0 0 0 1px var(--glass-line); transform: translate(-50%, -100%); }
+.rlbl { position: absolute; left: 0; top: 0; white-space: nowrap; display: none; pointer-events: none; font-size: 10.5px; font-weight: 500; letter-spacing: 0.02em; color: var(--muted); text-shadow: 0 0 2px var(--ground), 0 0 3px var(--ground), 0 0 4px var(--ground); transform: translate(-50%, -50%); }
 .rlbl.w { color: #3b86b3; font-style: italic; }
 .rlbl.g { color: #3f8a4f; }
-.lbl.main { border-color: var(--accent); color: var(--accent); font-weight: 600; font-size: 12px; }
-#views { position: absolute; right: 8px; top: 8px; display: flex; flex-direction: column; gap: 6px; }
-button { font: inherit; color: inherit; }
-.vbtn { min-width: 64px; min-height: 36px; padding: 0 10px; border-radius: 8px; border: 1px solid var(--line); background: var(--panel); font-size: 12.5px; cursor: pointer; }
-.vbtn[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); }
-.vbtn:focus-visible, .chip:focus-visible, #close:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-#card { position: absolute; left: 8px; right: 8px; bottom: 8px; max-width: 420px; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--panel); display: none; }
-#card.on { display: block; }
-#card h2 { margin: 0 24px 4px 0; font-size: 15px; font-weight: 600; text-wrap: balance; }
-#card dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 2px 12px; font-size: 12.5px; }
+.lbl.main { color: var(--accent); font-weight: 600; font-size: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.12), inset 0 0 0 1.5px var(--accent); }
+button { font: inherit; color: inherit; -webkit-tap-highlight-color: transparent; }
+#views { position: absolute; right: 10px; top: 10px; display: flex; gap: 2px; padding: 3px; border-radius: 12px; z-index: 3; }
+.vbtn { min-height: 32px; padding: 0 11px; border: 0; border-radius: 9px; background: transparent; color: var(--muted); font-size: 12.5px; font-weight: 500; cursor: pointer; white-space: nowrap; transition: background .15s, color .15s; }
+.vbtn:hover { color: var(--fg); }
+.vbtn[aria-pressed="true"] { background: var(--seg-on); color: var(--fg); box-shadow: 0 1px 3px rgba(0,0,0,0.12); }
+#v-spin[aria-pressed="true"] { color: var(--accent); }
+.vbtn:focus-visible, .chip:focus-visible, #close:focus-visible, .nbtn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+#ctrl { position: absolute; right: 10px; bottom: 10px; display: flex; align-items: flex-end; gap: 10px; z-index: 3; transition: bottom .2s ease; }
+#card.on ~ #ctrl { bottom: 172px; }
+.nbtn { padding: 0; border: 0; background: transparent; color: var(--fg); cursor: pointer; display: grid; place-items: center; touch-action: none; user-select: none; -webkit-user-select: none; transition: background .12s, transform .12s, color .12s; }
+.nbtn svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.nbtn:hover { background: var(--hover); }
+.nbtn:active { transform: scale(0.9); color: var(--accent); }
+#zoomc { display: flex; flex-direction: column; width: 44px; border-radius: 14px; overflow: hidden; }
+#zoomc .nbtn { width: 44px; height: 44px; }
+#zoomc .sep { height: 1px; margin: 0 10px; background: var(--glass-line); }
+#nav { position: relative; width: 100px; height: 100px; border-radius: 50%; }
+#nav .nbtn[data-d] { position: absolute; width: 34px; height: 34px; border-radius: 50%; color: var(--muted); }
+#nav .nbtn[data-d]:hover { color: var(--fg); }
+#nav .up { left: 33px; top: 2px; } #nav .dn { left: 33px; bottom: 2px; } #nav .lf { left: 2px; top: 33px; } #nav .rt { right: 2px; top: 33px; }
+#d-home { position: absolute; left: 32px; top: 32px; width: 36px; height: 36px; border-radius: 50%; background: var(--seg-on); box-shadow: 0 1px 3px rgba(0,0,0,0.14), inset 0 0 0 1px var(--glass-line); }
+#needle { display: block; width: 14px; height: 22px; }
+#needle svg { width: 14px; height: 22px; display: block; }
+#card { position: absolute; left: 10px; right: 10px; bottom: 10px; max-width: 420px; padding: 14px 16px; border-radius: 16px; display: none; z-index: 4; }
+#card.on { display: block; animation: rise .18s ease-out; }
+@keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+#card h2 { margin: 0 28px 8px 0; font-size: 15.5px; font-weight: 600; letter-spacing: -0.01em; text-wrap: balance; }
+#card dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; font-size: 12.5px; }
 #card dt { color: var(--muted); }
 #card dd { margin: 0; font-family: var(--font-num); min-width: 0; }
-#close { position: absolute; right: 4px; top: 4px; width: 32px; height: 32px; border: 0; background: none; font-size: 18px; color: var(--muted); cursor: pointer; }
-#hint { position: absolute; left: 8px; top: 8px; font-size: 11.5px; color: var(--muted); background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 2px 8px; pointer-events: none; }
-#dock { padding-block: 8px 4px; }
-#chips { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; }
+#close { position: absolute; right: 8px; top: 8px; width: 28px; height: 28px; border: 0; border-radius: 50%; background: var(--hover); font-size: 16px; line-height: 1; color: var(--muted); cursor: pointer; }
+#hint { position: absolute; left: 10px; bottom: 10px; font-size: 11.5px; color: var(--muted); border-radius: 10px; padding: 6px 10px; pointer-events: none; max-width: calc(100% - 180px); }
+#dock { padding-block: 10px 4px; }
+#chips { display: flex; gap: 6px; overflow-x: auto; padding: 2px 2px 6px; scrollbar-width: none; }
 #chips::-webkit-scrollbar { display: none; }
-.chip { flex: none; display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 0 12px; border-radius: 18px; border: 1px solid var(--line); background: var(--panel); font-size: 12.5px; cursor: pointer; }
-.chip .dot { width: 10px; height: 10px; border-radius: 3px; background: var(--sw); }
-.chip .n { font-family: var(--font-num); font-size: 11.5px; color: var(--muted); }
+.chip { flex: none; display: inline-flex; align-items: center; gap: 7px; min-height: 34px; padding: 0 13px 0 11px; border-radius: 999px; border: 0; background: var(--glass); box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0 0 0 1px var(--glass-line); font-size: 12.5px; font-weight: 500; cursor: pointer; transition: opacity .15s; }
+.chip .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--sw); }
+.chip .n { font-family: var(--font-num); font-size: 11.5px; font-weight: 400; color: var(--muted); }
 .chip[aria-pressed="false"] { opacity: 0.45; }
 .chip[aria-pressed="false"] .dot { background: transparent; box-shadow: inset 0 0 0 1.5px var(--sw); }
-footer { padding-block: 2px 8px; font-size: 11px; color: var(--muted); }
+footer { padding-block: 2px 10px; font-size: 10.5px; line-height: 1.55; color: var(--muted); opacity: 0.85; }
 footer a { color: inherit; }
 #fail { position: absolute; inset: 0; display: none; place-items: center; text-align: center; padding: 24px; color: var(--muted); }
+@media (max-width: 400px) { .vbtn { padding: 0 9px; font-size: 12px; } }
 @media (min-width: 720px) {
-  header { padding-block: 14px 8px; }
-  h1 { font-size: 24px; }
-  #card { left: auto; right: 8px; width: 340px; bottom: 8px; }
+  header { padding-block: 18px 12px; }
+  h1 { font-size: 26px; }
+  #card { right: auto; width: 340px; }
+  #card.on ~ #ctrl { bottom: 10px; }
+  #card.on ~ #hint, #card.on + #hint { display: none; }
 }
 @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
 </style>
 
 <header>
   <div>
-    <h1>삼호동 3D 맵</h1>
+    <p class="eyebrow">ULSAN · NAM-GU</p>
+    <h1>삼호동<span class="tag">3D</span></h1>
     <p class="sub">울산 남구 삼호동 행정구역 전체 약 2.6㎢ · 건물 <b id="total">0</b>동</p>
   </div>
-  <div id="compass" aria-label="북쪽 방향"><span id="needle"><i>N</i></span></div>
 </header>
 
 <div id="stage">
   <canvas id="gl" aria-label="삼호동 건물 3D 지도. 끌어서 회전, 두 손가락으로 확대와 이동, 건물을 누르면 정보가 보입니다."></canvas>
   <div id="labels"></div>
-  <div id="hint">끌어서 회전 · 핀치로 확대 · 건물을 눌러 보기</div>
-  <div id="views">
+  <div id="hint" class="glass">끌어서 회전 · 버튼으로 확대·이동</div>
+  <div id="views" class="glass" role="group" aria-label="보기 방식">
     <button class="vbtn" id="v-bird" type="button" aria-pressed="true">조감</button>
     <button class="vbtn" id="v-top" type="button" aria-pressed="false">평면</button>
     <button class="vbtn" id="v-near" type="button" aria-pressed="false">센터 앞</button>
     <button class="vbtn" id="v-spin" type="button" aria-pressed="false">돌아보기</button>
   </div>
-  <div id="card" role="status">
+  <div id="card" class="glass" role="status">
     <button id="close" type="button" aria-label="닫기">×</button>
     <h2 id="c-name"></h2>
     <dl>
@@ -183,6 +220,20 @@ footer a { color: inherit; }
     </dl>
   </div>
   <div id="fail">이 기기에서는 3D 화면을 열 수 없습니다.<br>브라우저의 하드웨어 가속을 켜 보세요.</div>
+  <div id="ctrl">
+    <div id="zoomc" class="glass">
+      <button class="nbtn" id="z-in" type="button" aria-label="확대"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
+      <div class="sep"></div>
+      <button class="nbtn" id="z-out" type="button" aria-label="축소"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/></svg></button>
+    </div>
+    <div id="nav" class="glass">
+      <button class="nbtn up" data-d="u" type="button" aria-label="위로 이동"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 14l6-6 6 6"/></svg></button>
+      <button class="nbtn lf" data-d="l" type="button" aria-label="왼쪽으로 이동"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 6l-6 6 6 6"/></svg></button>
+      <button class="nbtn rt" data-d="r" type="button" aria-label="오른쪽으로 이동"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 6l6 6-6 6"/></svg></button>
+      <button class="nbtn dn" data-d="d" type="button" aria-label="아래로 이동"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 10l6 6 6-6"/></svg></button>
+      <button class="nbtn" id="d-home" type="button" aria-label="처음 위치로, 나침반"><span id="needle"><svg viewBox="0 0 14 22" aria-hidden="true"><path d="M7 1 L12 11 L2 11 Z" fill="#e5484d" stroke="none"/><path d="M7 21 L12 11 L2 11 Z" fill="currentColor" opacity="0.35" stroke="none"/></svg></span></button>
+    </div>
+  </div>
 </div>
 
 <div id="dock">
@@ -4121,6 +4172,52 @@ u,3.2,0,굴화주공 강변그린빌 4단지|418 1090 -2 -3 -1 0 2 4</script>
   spinBtn.addEventListener('click', function () { spin = !spin; spinBtn.setAttribute('aria-pressed', spin ? 'true' : 'false'); });
   canvas.addEventListener('pointerdown', function () { viewBtns.forEach(function (v) { document.getElementById(v).setAttribute('aria-pressed', 'false'); }); });
 
+
+  /* ---- 버튼 확대·이동 ---- */
+  (function () {
+    function clearView() { viewBtns.forEach(function (v) { document.getElementById(v).setAttribute('aria-pressed', 'false'); }); }
+    function act(kind) {
+      tween = null; clearView();
+      if (kind === 'in') dist = Math.max(60, dist * 0.97);
+      else if (kind === 'out') dist = Math.min(4800, dist / 0.97);
+      else if (kind === 'u') pan(0, 6);
+      else if (kind === 'd') pan(0, -6);
+      else if (kind === 'l') pan(6, 0);
+      else if (kind === 'r') pan(-6, 0);
+      need = true;
+    }
+    function once(kind) {
+      tween = null; clearView();
+      if (kind === 'in') dist = Math.max(60, dist * 0.7);
+      else if (kind === 'out') dist = Math.min(4800, dist / 0.7);
+      else if (kind === 'u') pan(0, 90);
+      else if (kind === 'd') pan(0, -90);
+      else if (kind === 'l') pan(90, 0);
+      else if (kind === 'r') pan(-90, 0);
+      need = true;
+    }
+    function hold(el, kind) {
+      var t1 = null, t2 = null;
+      function stop() { clearTimeout(t1); clearInterval(t2); t1 = t2 = null; }
+      el.addEventListener('pointerdown', function (e) {
+        e.preventDefault(); e.stopPropagation(); stop();
+        once(kind);
+        t1 = setTimeout(function () { t2 = setInterval(function () { act(kind); }, 16); }, 350);
+      });
+      ['pointerup', 'pointercancel', 'pointerleave', 'blur'].forEach(function (n) { el.addEventListener(n, stop); });
+      el.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); once(kind); } });
+      el.addEventListener('contextmenu', function (e) { e.preventDefault(); });
+    }
+    hold(document.getElementById('z-in'), 'in');
+    hold(document.getElementById('z-out'), 'out');
+    Array.prototype.forEach.call(document.querySelectorAll('#nav [data-d]'), function (b) { hold(b, b.getAttribute('data-d')); });
+    document.getElementById('d-home').addEventListener('click', function () { clearView(); goto(az, el, 2600, CENTER.clone()); });
+    window.addEventListener('keydown', function (e) {
+      var k = e.key, m = { ArrowUp: 'u', ArrowDown: 'd', ArrowLeft: 'l', ArrowRight: 'r', '+': 'in', '=': 'in', '-': 'out', '_': 'out' }[k];
+      if (!m || e.target && /INPUT|TEXTAREA|SELECT/.test(e.target.tagName)) return;
+      e.preventDefault(); once(m);
+    });
+  })();
   /* ---- 반복 ---- */
   applyTheme();
   var mq = window.matchMedia('(prefers-color-scheme: dark)');
