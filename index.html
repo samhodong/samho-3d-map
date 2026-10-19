@@ -133,6 +133,26 @@ h1 .tag { display: inline-block; margin-left: 6px; padding: 1px 7px; border-radi
 #gl { display: block; width: 100%; height: 100%; touch-action: none; cursor: grab; }
 #gl:active { cursor: grabbing; }
 #labels { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.gname { position: absolute; left: 0; top: 0; display: none; white-space: nowrap; pointer-events: none; font-size: 10px; font-weight: 600; letter-spacing: -0.01em; color: #8a5a0e; text-shadow: 0 0 2px var(--ground), 0 0 3px var(--ground), 0 0 4px var(--ground), 0 0 5px var(--ground); }
+.gname::before { content: ''; display: inline-block; width: 4px; height: 4px; border-radius: 50%; background: #e2a43a; margin-right: 4px; vertical-align: 2px; box-shadow: 0 0 0 1.5px rgba(255,255,255,0.8); }
+.gname.st { color: #7a4c06; }
+.gname.vet { font-weight: 700; }
+.gname.vet::after { content: '10년'; margin-left: 4px; padding: 0 4px; border-radius: 3px; font-size: 8.5px; line-height: 13px; display: inline-block; background: #e2a43a; color: #fff; text-shadow: none; vertical-align: 1px; }
+.gname.sel { padding: 3px 9px 3px 8px; border-radius: 999px; background: rgba(30,25,18,0.85); color: #f6dfa8; text-shadow: none; font-size: 11px; box-shadow: 0 3px 10px rgba(0,0,0,0.2); z-index: 2; }
+#stage.night .gname { color: #f3cf86; text-shadow: 0 0 2px #1e2536, 0 0 3px #1e2536, 0 0 4px #1e2536, 0 0 5px #1e2536; }
+#stage.night .gname::before { box-shadow: 0 0 6px #f2c45f; }
+@media (prefers-color-scheme: dark) { .gname { color: #f0cc7a; } }
+.glbl { position: absolute; left: 0; top: 0; display: none; white-space: nowrap; font-size: 10.5px; font-weight: 600; letter-spacing: -0.01em; padding: 3px 9px 3px 8px; border-radius: 999px; background: rgba(30,25,18,0.8); color: #f6dfa8; box-shadow: 0 3px 10px rgba(0,0,0,0.18), inset 0 0 0 1px rgba(240,200,120,0.38); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); pointer-events: none; }
+.glbl::before { content: ''; display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: #e9b44c; box-shadow: 0 0 6px #f2c45f; margin-right: 6px; vertical-align: 2px; }
+.glbl.street { font-size: 11.5px; letter-spacing: 0.06em; padding: 5px 12px 5px 11px; background: linear-gradient(135deg, rgba(40,32,20,0.88), rgba(70,52,24,0.85)); }
+#card.good { box-shadow: 0 10px 30px rgba(120,80,20,0.18), inset 0 0 0 1px rgba(226,176,84,0.6); }
+#card.good h2 { color: #9a6b12; }
+#card.good.vet h2::before { content: '10년 이상 함께한 착한가게'; color: #b07d1e; }
+#card.good.vet { background-image: linear-gradient(160deg, rgba(240,200,110,0.22), rgba(240,200,110,0) 55%); box-shadow: 0 12px 34px rgba(140,95,20,0.25), inset 0 0 0 1.5px rgba(214,163,66,0.85); }
+.glbl.vet { background: linear-gradient(135deg, rgba(58,40,12,0.92), rgba(110,78,22,0.9)); color: #ffe7b0; }
+.glbl.vet::after { content: '10년'; margin-left: 6px; padding: 0 5px; border-radius: 4px; font-size: 9px; line-height: 14px; display: inline-block; background: #e9b44c; color: #3a2606; font-weight: 700; }
+#card.good h2::before { content: '착한가게'; display: block; font-size: 10.5px; font-weight: 600; letter-spacing: 0.12em; color: #c08a2c; margin-bottom: 3px; }
+@media (prefers-color-scheme: dark) { #card.good h2 { color: #f0cc7a; } }
 .lbl { position: absolute; left: 0; top: 0; white-space: nowrap; font-size: 11px; font-weight: 500; padding: 2px 8px; border-radius: 7px; background: var(--glass); color: var(--fg); box-shadow: 0 1px 2px rgba(0,0,0,0.08), inset 0 0 0 1px var(--glass-line); transform: translate(-50%, -100%); }
 .rlbl { position: absolute; left: 0; top: 0; white-space: nowrap; display: none; pointer-events: none; font-size: 10.5px; font-weight: 500; letter-spacing: 0.02em; color: var(--muted); text-shadow: 0 0 2px var(--ground), 0 0 3px var(--ground), 0 0 4px var(--ground); transform: translate(-50%, -50%); }
 .rlbl.w { color: #3b86b3; font-style: italic; }
@@ -259,7 +279,7 @@ footer a { color: inherit; }
 <div id="dock">
   <div id="chips" role="group" aria-label="건물 유형 켜기와 끄기"></div>
 </div>
-<footer>건물 윤곽 © 국토교통부 <a href="https://www.vworld.kr" target="_blank" rel="noopener">브이월드</a>, 용도·높이 © 국토교통부 건축HUB 건축물대장(공공데이터포털), 도로·하천·녹지·도로명 및 일부 보조 © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap contributors</a> (ODbL), 2026-10-16 기준. 대장과 연결되지 않은 건물은 층수×3.2m로 환산했고, 층수 정보가 없는 건물은 유형별로 추정했습니다. 회색(용도 미확인) 건물은 건축물대장에서 찾지 못해 브이월드 층수×3.2m로 높이를 환산했습니다. 삼호동 경계선(초록 실선)은 공개 행정동 경계 자료를 단순화한 것이라 실제와 다소 다를 수 있습니다. 격자 간격 100m. 차량·보행자·신호등은 실제 데이터가 아닌 시뮬레이션입니다.</footer>
+<footer>건물 윤곽 © 국토교통부 <a href="https://www.vworld.kr" target="_blank" rel="noopener">브이월드</a>, 용도·높이 © 국토교통부 건축HUB 건축물대장(공공데이터포털), 착한가게(금색 건물) © 울산 남구 정기 기부자 명단 2026.10.19. 기준(주소 좌표로 건물을 찾아 표시해 일부 다를 수 있음), 도로·하천·녹지·도로명 및 일부 보조 © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap contributors</a> (ODbL), 2026-10-16 기준. 대장과 연결되지 않은 건물은 층수×3.2m로 환산했고, 층수 정보가 없는 건물은 유형별로 추정했습니다. 회색(용도 미확인) 건물은 건축물대장에서 찾지 못해 브이월드 층수×3.2m로 높이를 환산했습니다. 삼호동 경계선(초록 실선)은 공개 행정동 경계 자료를 단순화한 것이라 실제와 다소 다를 수 있습니다. 격자 간격 100m. 차량·보행자·신호등은 실제 데이터가 아닌 시뮬레이션입니다.</footer>
 
 <script type="text/plain" id="gdata">rmb|369 79 -17 206 -6 49 -12 59 -19 48 -18 28 -19 22 -20 20 -24 19 -243 159
 rp|20 1162 72 -35 92 -48 156 -87 102 -50 43 -17 102 -29
@@ -4031,12 +4051,15 @@ u,3.2,0,굴화주공 강변그린빌 4단지|418 1090 -2 -3 -1 0 2 4</script>
     var L = layers[c], colA = L.mesh.geometry.getAttribute('color'), arr = colA.array, base = new THREE.Color(hex);
     var wall = base.clone().lerp(new THREE.Color(dark ? 0x000000 : 0xffffff), dark ? 0.12 : 0.55);
     var total = arr.length / 3;
+    var gOn = typeof GOOD !== 'undefined' && GOOD.isOn(), NEU = new THREE.Color(dark ? 0x3a3a40 : 0xe8e3da);
+    if (gOn) wall.lerp(NEU, 0.35);
     L.list.forEach(function (b, k) {
       var v0 = L.starts[k] * 3, v1 = (k + 1 < L.starts.length ? L.starts[k + 1] : total / 3) * 3;
       var sh = 0.9 + 0.1 * rnd(b.id + 7);
       base.getHSL(hsl);
       var hj = (c === 'h' || c === 'a') ? -0.065 * rnd(b.id + 3) + 0.01 : (rnd(b.id + 3) - 0.5) * 0.04;
       tmpC.setHSL((hsl.h + hj + 1) % 1, Math.min(1, hsl.s * (0.62 + 0.3 * rnd(b.id + 5))), Math.min(0.9, hsl.l * (0.9 + 0.12 * rnd(b.id + 9))));
+      if (gOn) tmpC.lerp(NEU, 0.35);
       for (var v = v0; v < v1 && v < total; v++) {
         var src = L.roof[v] ? tmpC : wall, s = L.roof[v] ? 1 : sh;
         arr[v * 3] = src.r * s; arr[v * 3 + 1] = src.g * s; arr[v * 3 + 2] = src.b * s;
@@ -4228,6 +4251,7 @@ u,3.2,0,굴화주공 강변그린빌 4단지|418 1090 -2 -3 -1 0 2 4</script>
     stage.classList.toggle('night', P.night);
     LAMPS.pools.visible = P.night; LAMPS.heads.material.color.set(P.night ? 0xffe2a8 : 0xf2efe6);
     if (typeof SIM !== 'undefined' && SIM.setNight) SIM.setNight(P.night || tod === 'dusk');
+    if (typeof GOOD !== 'undefined') GOOD.setNight(P.night || tod === 'dusk');
     sun.color.set(P.sc); hemi.color.set(P.hs); hemi.groundColor.set(P.hg);
     sun.position.set(P.sun[0], P.sun[1], P.sun[2]);
     var sk = Math.min(1.9, 1 / P.sun[1]) / Math.hypot(P.sun[0], P.sun[2]);
@@ -4333,6 +4357,166 @@ u,3.2,0,굴화주공 강변그린빌 4단지|418 1090 -2 -3 -1 0 2 4</script>
     need = true;
   }, { passive: false });
 
+  /* ---- 착한가게: 건물을 금색으로 ---- */
+  var GOOD = (function () {
+    var D = [[232.7,-684.9,"1번가생뒷고기",0,2019,0,0],[1195.1,-610.7,"4도씨비어",0,2025,0,0],[1222.0,-592.9,"coffee ya",0,2024,1,0],[862.4,-626.3,"곤드레산나물밥집",0,2024,0,0],[360.7,-996.2,"굿윌스토어밀알울산무거점",0,2026,0,0],[1277.2,-624.1,"궁거랑능이백숙",0,2022,1,0],[737.6,-613.8,"궁거랑찰보리빵",0,2025,0,0],[1410.8,-357.1,"그린바나나",0,2025,0,0],[1816.4,-343.7,"꽃밭에서",0,2023,0,0],[791.5,-448.5,"대성에너시스",0,2016,0,1],[1210.1,-739.2,"대통갈비탕",0,2023,1,0],[677.6,-483.3,"더런드리셀프빨래방 무거삼호점",0,2024,0,0],[-48.1,-911.0,"도감소",0,2024,0,0],[1215.0,-579.9,"도연아불피아라",0,2024,1,0],[2328.7,-177.9,"동원광고",0,2023,0,0],[1263.5,-623.0,"등뼈식당",0,2023,1,0],[1134.2,-496.2,"로데오",0,2025,1,0],[2292.2,-90.2,"린나이 모든에너지",0,2021,0,0],[329.9,-737.0,"무공태권도",0,2019,0,0],[475.3,-580.1,"문수골돼지국밥",0,2022,0,0],[1144.9,-766.2,"미진돌곱창",0,2016,1,1],[756.5,-729.0,"보라매",0,2016,0,1],[1856.3,-142.1,"보현사",0,2021,0,0],[1062.3,-705.2,"본가한우곱창",0,2019,1,0],[698.6,-560.8,"부문상사",0,2020,0,0],[551.8,-489.1,"북경",0,2023,0,0],[2016.5,-243.0,"삼호매일유통",0,2022,0,0],[702.0,-616.0,"삼호밀면",0,2025,0,0],[1150.6,-526.4,"서울산새마을금고",1,2026,1,0],[513.7,-775.0,"서울아동병원",0,2024,0,0],[1878.1,-311.6,"소풍날김밥",0,2024,0,0],[1421.0,-352.6,"수암한의원",0,2016,0,1],[449.3,-611.3,"스윗그레이",0,2022,0,0],[1224.9,-735.0,"에반커피",0,2025,1,0],[1524.1,-309.6,"오토오아시스무거점",0,2021,0,0],[1192.2,-743.4,"우리종합광고",0,2016,1,1],[7334.8,459.5,"울산깍두기",0,2022,0,0],[941.0,-756.1,"울산미즈병원",0,2020,0,0],[724.0,-621.6,"원라이프",0,2020,0,0],[253.2,-1080.3,"윤영민정형외과의원",0,2016,0,1],[1378.0,-493.7,"이수진수학학원",0,2021,0,0],[358.9,-828.4,"일번지부동산공인중개사",0,2022,0,0],[363.9,-1024.6,"임꺽정숯불갈비",0,2022,0,0],[1165.5,-486.1,"한양태권도",0,2026,1,0],[492.4,-453.2,"조명1번가",0,2025,0,0],[1246.1,-439.0,"주식회사 인기기프트",0,2020,0,0],[703.2,-629.9,"중화루",0,2025,0,0],[1175.8,-624.4,"진정화로구이",0,2019,1,0],[6944.2,780.3,"청담치과",0,2021,0,0],[1169.2,-563.0,"청송건강원",0,2025,1,0],[-497.3,525.2,"충무동비빔칼국수",0,2026,0,0],[1195.1,-610.7,"치킨신드롬",0,2022,1,0],[1180.6,-683.5,"태화강 소갈비살 참숯구이",0,2023,1,0],[2213.4,-171.9,"토탈라인시스템",0,2016,0,1],[449.3,-611.3,"파리바게뜨 울산삼호점",0,2023,0,0],[1292.4,-722.0,"해정왕뽈데기찜",0,2026,1,0],[2037.6,-319.0,"호계주택",0,2023,0,0],[2023.0,-284.4,"환이네",0,2023,0,0],[1230.3,-715.3,"흑산도홍어",0,2023,1,0],[1987.7,-276.8,"GS25삼호중앙점",0,2023,0,0],[329.9,-767.8,"간절곶 배꽃마을",0,2026,0,0],[1761.0,-420.4,"까마귀커피앤티랩",0,2023,0,0],[1202.8,-622.7,"스시점빵",0,2025,1,0],[359.7,-168.2,"오서방별난족발",0,2016,0,1],[922.0,-555.3,"힐링",0,2020,0,0],[1020.0,-464.4,"카페051",0,2026,0,0],[1279.4,-701.8,"365당구장",0,2026,1,0],[1216.1,-535.9,"와와뒷고기",0,2026,1,0]]; // [x, z, 이름, 유형(0 가게/1 기업), 가입연도, 착한거리(0/1), 10년 이상(0/1)]
+    function inP(x, z, b) {
+      var c = false, E = b.E, N = b.N, n = E.length;
+      for (var i = 0, j = n - 1; i < n; j = i++) {
+        var zi = -N[i], zj = -N[j];
+        if ((zi > z) !== (zj > z) && x < (E[j] - E[i]) * (z - zi) / (zj - zi) + E[i]) c = !c;
+      }
+      return c;
+    }
+    function cen(b) { var x = 0, z = 0; for (var i = 0; i < b.E.length; i++) { x += b.E[i]; z -= b.N[i]; } return [x / b.E.length, z / b.E.length]; }
+    var hit = [], matched = 0;
+    D.forEach(function (p, i) {
+      var best = null, bd = 22;
+      for (var k = 0; k < B.length; k++) {
+        var b = B[k], c = b.cc || (b.cc = cen(b));
+        if (Math.abs(c[0] - p[0]) > 80 || Math.abs(c[1] - p[1]) > 80) continue;
+        if (inP(p[0], p[1], b)) { best = b; bd = -1; break; }
+        var d = Math.hypot(c[0] - p[0], c[1] - p[1]);
+        if (d < bd) { bd = d; best = b; }
+      }
+      if (best) { (best.good || (best.good = [])).push(i); if (hit.indexOf(best) < 0) hit.push(best); matched++; }
+    });
+    var on = true;
+
+    /* 금색 건물(원래 건물 위에 겹쳐 그림) + 금색 외곽선 + 바닥 광채 */
+    var gpos = [], gcol = [];
+    hit.forEach(function (b) { pushBuilding(b, gpos, gcol, 1, b.H); });
+    var gg = new THREE.BufferGeometry(); gg.setAttribute('position', new THREE.Float32BufferAttribute(gpos, 3)); gg.computeVertexNormals();
+    var nrm = gg.getAttribute('normal').array, gc = [], RF = new THREE.Color(0xe2a43a), WL = new THREE.Color(0xf4d08e);
+    for (var v = 0; v < nrm.length; v += 3) { var c0 = nrm[v + 1] > 0.5 ? RF : WL; gc.push(c0.r, c0.g, c0.b); }
+    gg.setAttribute('color', new THREE.Float32BufferAttribute(gc, 3));
+    var bodyMat = new THREE.MeshLambertMaterial({ vertexColors: true, emissive: 0x2a1800, polygonOffset: true, polygonOffsetFactor: -1, polygonOffsetUnits: -4 });
+    var body = new THREE.Mesh(gg, bodyMat); body.raycast = function () {}; scene.add(body);
+    var epos = gpos;
+    var eg = new THREE.BufferGeometry(); eg.setAttribute('position', new THREE.Float32BufferAttribute(epos.map(function (q, i) { return i % 3 === 1 && q > 0 ? q + 0.08 : q; }), 3));
+    var edgeG = new THREE.LineBasicMaterial({ color: 0xf6d690, transparent: true, opacity: 0.95 });
+    var gold = new THREE.LineSegments(new THREE.EdgesGeometry(eg, 25), edgeG);
+    gold.raycast = function () {}; scene.add(gold);
+    var cv = document.createElement('canvas'); cv.width = cv.height = 128;
+    var cx2 = cv.getContext('2d'), gr = cx2.createRadialGradient(64, 64, 4, 64, 64, 64);
+    gr.addColorStop(0, 'rgba(255,214,130,1)'); gr.addColorStop(0.45, 'rgba(240,180,80,0.45)'); gr.addColorStop(1, 'rgba(240,180,80,0)');
+    cx2.fillStyle = gr; cx2.fillRect(0, 0, 128, 128);
+    var glowMat = new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(cv), transparent: true, depthWrite: false, opacity: 0.45 });
+    var pg = new THREE.PlaneGeometry(1, 1); pg.rotateX(-Math.PI / 2);
+    var glows = new THREE.InstancedMesh(pg, glowMat, Math.max(1, hit.length)), dm = new THREE.Object3D();
+    hit.forEach(function (b, i) {
+      var q = b.bb, c = b.cc, w = Math.max(q[1] - q[0], q[3] - q[2]) + 26;
+      dm.position.set(c[0], 0.22, c[1]); dm.scale.set(w, 1, w); dm.updateMatrix(); glows.setMatrixAt(i, dm.matrix);
+    });
+    glows.renderOrder = 4; glows.raycast = function () {}; scene.add(glows);
+
+    /* 10년 이상: 지붕 위 금빛 고리 두 겹 + 가는 빛기둥 */
+    var vets = hit.filter(function (b) { return b.good.some(function (i) { return D[i][6]; }); });
+    var vet = new THREE.Group(); scene.add(vet);
+    var ringMat = new THREE.MeshBasicMaterial({ color: 0xdc9f2a });
+    var ring2Mat = new THREE.MeshBasicMaterial({ color: 0xfff1c9, transparent: true, opacity: 0.85 });
+    var beamMat = new THREE.MeshBasicMaterial({ color: 0xffd98a, transparent: true, opacity: 0.22, depthWrite: false, blending: THREE.AdditiveBlending });
+    var rings = [];
+    vets.forEach(function (b) {
+      var q = b.bb, R0 = Math.max(7, Math.min(q[1] - q[0], q[3] - q[2]) * 0.55), c = b.cc;
+      var r1 = new THREE.Mesh(new THREE.TorusGeometry(R0, 1.0, 10, 56), ringMat); r1.rotation.x = Math.PI / 2;
+      var r2 = new THREE.Mesh(new THREE.TorusGeometry(R0 * 0.7, 0.55, 8, 48), ring2Mat); r2.rotation.x = Math.PI / 2;
+      r1.position.set(c[0], b.H + 7, c[1]); r2.position.set(c[0], b.H + 9.5, c[1]);
+      var bm = new THREE.Mesh(new THREE.CylinderGeometry(1.4, 3.2, 40, 12, 1, true), beamMat); bm.position.set(c[0], b.H + 20, c[1]);
+      [r1, r2, bm].forEach(function (m) { m.raycast = function () {}; vet.add(m); });
+      rings.push({ a: r1, b: r2, y: b.H });
+    });
+    function spinRings(t) {
+      rings.forEach(function (o, i) { var ph = t * 0.0012 + i; o.a.position.y = o.y + 7 + Math.sin(ph) * 0.8; o.b.position.y = o.y + 9.5 + Math.sin(ph + 0.9) * 0.8; o.a.rotation.z = t * 0.0004; });
+    }
+
+    /* 어은로 착한거리: 가는 금빛 선 + 은은한 광채 */
+    var C = [[1121, -429], [1230, -643], [1243, -667], [1289, -759]];
+    function ribbon(pts, w, y) {
+      var pos = [];
+      for (var i = 0; i < pts.length - 1; i++) {
+        var p = pts[i], q = pts[i + 1], dx = q[0] - p[0], dz = q[1] - p[1], l = Math.hypot(dx, dz) || 1, nx = -dz / l * w / 2, nz = dx / l * w / 2;
+        pos.push(p[0] - nx, y, p[1] - nz, p[0] + nx, y, p[1] + nz, q[0] - nx, y, q[1] - nz, p[0] + nx, y, p[1] + nz, q[0] + nx, y, q[1] + nz, q[0] - nx, y, q[1] - nz);
+      }
+      var g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3)); return g;
+    }
+    var zone = new THREE.Group(); scene.add(zone);
+    var zGlowMat = new THREE.MeshBasicMaterial({ color: 0xf0bd57, transparent: true, opacity: 0.16, depthWrite: false, side: THREE.DoubleSide });
+    var zLineMat = new THREE.MeshBasicMaterial({ color: 0xd9a03a, transparent: true, opacity: 0.95, depthWrite: false, side: THREE.DoubleSide });
+    var zg = new THREE.Mesh(ribbon(C, 24, 0.4), zGlowMat), zl = new THREE.Mesh(ribbon(C, 2.6, 0.5), zLineMat);
+    zg.renderOrder = 6; zl.renderOrder = 7; zg.raycast = zl.raycast = function () {};
+    zone.add(zg, zl);
+
+    /* 이름표 */
+    var box = document.getElementById('labels'), pv = new THREE.Vector3(), zoneOn = true, sel = null;
+    var zlabel = document.createElement('div'); zlabel.className = 'glbl street'; zlabel.textContent = '어은로 착한거리'; box.appendChild(zlabel);
+    var zv = new THREE.Vector3(1214, 3, -612);
+    var lbls = hit.map(function (b) {
+      var e = document.createElement('div'), st = b.good.some(function (i) { return D[i][5]; }), vt = b.good.some(function (i) { return D[i][6]; });
+      e.className = 'gname' + (vt ? ' vet' : '') + (st ? ' st' : ''); e.textContent = b.good.map(function (i) { return D[i][2]; }).join(' · ');
+      box.appendChild(e); return { el: e, w: 0, pri: (vt ? 2 : 0) + (st ? 1 : 0), b: b, st: st || vt, v: new THREE.Vector3(b.cc[0], b.H + (vt ? 14 : 1.5), b.cc[1]) };
+    });
+    var order = lbls.slice().sort(function (a, b) { return b.pri - a.pri; });
+    function place(el, v, w, h, show, ay) {
+      if (show) { pv.copy(v).project(camera); show = pv.z < 1 && Math.abs(pv.x) < 1.05 && Math.abs(pv.y) < 1.05; }
+      el.style.display = show ? 'block' : 'none';
+      if (show) el.style.transform = 'translate(' + ((pv.x + 1) / 2 * w) + 'px,' + ((1 - pv.y) / 2 * h) + 'px) translate(-50%,' + ay + ')';
+    }
+    function updateLabels(w, h) {
+      place(zlabel, zv, w, h, zoneOn && dist < 2400 && dist > 320, '-50%');
+      // 공원 이름처럼 항상 작게 표시, 겹치면 우선순위(10년 > 착한거리 > 일반)대로 하나만
+      var boxes = [];
+      if (zlabel.style.display === 'block') { var zw = zlabel.offsetWidth / 2 + 4, zh = zlabel.offsetHeight / 2 + 3, zx = (pv.x + 1) / 2 * w, zy = (1 - pv.y) / 2 * h; boxes.push([zx - zw, zy - zh, zx + zw, zy + zh]); }
+      order.forEach(function (l) {
+        var show = on && dist < 3200;
+        if (show) { pv.copy(l.v).project(camera); show = pv.z < 1 && Math.abs(pv.x) < 1.02 && Math.abs(pv.y) < 1.02; }
+        if (show) {
+          if (!l.w) { l.el.style.display = 'block'; l.w = l.el.offsetWidth || 60; l.h = l.el.offsetHeight || 14; }
+          var sx = (pv.x + 1) / 2 * w, sy = (1 - pv.y) / 2 * h, x0 = sx - l.w / 2 - 2, y0 = sy - l.h - 2, x1 = sx + l.w / 2 + 2, y1 = sy + 2;
+          if (l.b !== sel) for (var k = 0; k < boxes.length; k++) { var q = boxes[k]; if (x0 < q[2] && x1 > q[0] && y0 < q[3] && y1 > q[1]) { show = false; break; } }
+          if (show) { boxes.push([x0, y0, x1, y1]); l.el.style.transform = 'translate(' + sx + 'px,' + sy + 'px) translate(-50%,-100%)'; }
+        }
+        l.el.style.display = show ? 'block' : 'none';
+        l.el.classList.toggle('sel', l.b === sel);
+      });
+    }
+    var dts = document.querySelectorAll('#card dt'), DT = ['유형', '높이', '바닥 면적'], card = document.getElementById('card');
+    function cardFor(b) {
+      sel = null; card.classList.remove('good'); card.classList.remove('vet');
+      for (var k = 0; k < 3; k++) dts[k].textContent = DT[k];
+      if (!on || !b.good) return false;
+      var ps = b.good.map(function (i) { return D[i]; });
+      sel = b; card.classList.add('good'); card.classList.toggle('vet', ps.some(function (p) { return p[6]; }));
+      document.getElementById('c-name').textContent = ps.map(function (p) { return p[2]; }).join(' · ');
+      ['구분', '위치', '참여'].forEach(function (t, k) { dts[k].textContent = t; });
+      document.getElementById('c-type').textContent = ps.some(function (p) { return p[3]; }) ? '착한기업' : '착한가게';
+      document.getElementById('c-h').textContent = ps.some(function (p) { return p[5]; }) ? '어은로 착한거리' : '삼호동';
+      var y0 = Math.min.apply(null, ps.map(function (p) { return p[4]; })), yr = new Date().getFullYear() - y0;
+      document.getElementById('c-area').textContent = y0 + '년부터 정기 기부' + (ps.some(function (p) { return p[6]; }) ? ' · ' + yr + '년째' : '');
+      return true;
+    }
+    function setNight(n) {
+      glowMat.blending = n ? THREE.AdditiveBlending : THREE.NormalBlending; glowMat.opacity = n ? 0.85 : 0.4; glowMat.needsUpdate = true;
+      zGlowMat.blending = glowMat.blending; zGlowMat.opacity = n ? 0.32 : 0.16; zGlowMat.needsUpdate = true;
+      zLineMat.color.set(n ? 0xffd27a : 0xd9a03a); beamMat.opacity = n ? 0.45 : 0.2; bodyMat.emissive.set(n ? 0x9a6514 : 0x2a1800); edgeG.color.set(n ? 0xffe2a0 : 0xf3d08a);
+    }
+    function mountChips(el) {
+      function mk(label, n, sw, fn) {
+        var b = document.createElement('button');
+        b.type = 'button'; b.className = 'chip'; b.setAttribute('aria-pressed', 'true');
+        b.innerHTML = '<span class="dot"></span><span>' + label + '</span>' + (n ? '<span class="n">' + n + '</span>' : '');
+        b.style.setProperty('--sw', sw);
+        b.addEventListener('click', function () { var v = b.getAttribute('aria-pressed') !== 'true'; b.setAttribute('aria-pressed', v ? 'true' : 'false'); fn(v); need = true; });
+        el.insertBefore(b, el.firstChild);
+        return b;
+      }
+      mk('어은로 착한거리', '', '#d9a03a', function (v) { zoneOn = v; zone.visible = v; });
+      mk('10년 이상', vets.length ? D.filter(function (p) { return p[6]; }).length : 0, '#b8862b', function (v) { vet.visible = v && on; });
+      mk('착한가게', D.length, '#e3ad4f', function (v) { on = v; gold.visible = glows.visible = body.visible = vet.visible = v; applyTheme(); closeCard(); });
+    }
+    return { spin: spinRings, isOn: function () { return on; }, cardFor: cardFor, updateLabels: updateLabels, setNight: setNight, mountChips: mountChips, matched: matched, buildings: hit.length };
+  })();
+
   /* ---- 건물 선택 ---- */
   var ray = new THREE.Raycaster();
   function pick(cx, cy) {
@@ -4350,6 +4534,7 @@ u,3.2,0,굴화주공 강변그린빌 4단지|418 1090 -2 -3 -1 0 2 4</script>
   }
   function openCard(b) {
     showPick(b);
+    if (GOOD.cardFor(b)) { document.getElementById('card').classList.add('on'); need = true; return; }
     document.getElementById('c-name').textContent = b.name || '이름이 등록되지 않은 건물';
     document.getElementById('c-type').textContent = CATS[b.c].name;
     document.getElementById('c-h').textContent = '약 ' + (Math.round(b.H * 10) / 10) + 'm · ' + (b.c === 'u' ? '건축물대장 미연결 · 층수 환산' : b.est ? '층수 미상 · 유형별 추정' : (b.fl ? b.fl + '층 · ' : '') + '건축물대장 기준');
@@ -4396,6 +4581,7 @@ u,3.2,0,굴화주공 강변그린빌 4단지|418 1090 -2 -3 -1 0 2 4</script>
       l.el.style.display = show ? 'block' : 'none';
       if (show) l.el.style.transform = 'translate(' + ((tmp.x + 1) / 2 * w) + 'px,' + ((1 - tmp.y) / 2 * h) + 'px) translate(-50%,-100%)';
     });
+    GOOD.updateLabels(w, h);
   }
 
   /* ---- 범례 칩 ---- */
@@ -4434,6 +4620,7 @@ u,3.2,0,굴화주공 강변그린빌 4단지|418 1090 -2 -3 -1 0 2 4</script>
       tc.setAttribute('aria-pressed', on ? 'true' : 'false'); TREES.group.visible = on; need = true;
     });
     chips.appendChild(tc);
+    GOOD.mountChips(chips);
   })();
 
   /* ---- 시점 버튼 ---- */
@@ -4749,6 +4936,7 @@ u,3.2,0,굴화주공 강변그린빌 4단지|418 1090 -2 -3 -1 0 2 4</script>
     if (tween) tween(now);
     if (SIM.on && !document.hidden) { SIM.step(dt); need = true; }
     if (spin && !reduce && ptrs.size === 0) { az += 0.0022; need = true; }
+    if (!reduce && GOOD.isOn()) { GOOD.spin(now); need = true; }
     if (need) { need = false; updateCam(); renderer.render(scene, camera); updateLabels(); }
     requestAnimationFrame(loop);
   }
